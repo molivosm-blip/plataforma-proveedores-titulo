@@ -1,0 +1,55 @@
+Ejecutado el 25-11-2026 18:05:53,88 
+Comando: php tests\manual\e2e_proceso.php . 
+ 
+PASS  PM crea solicitud preliminar
+PASS  Catálogo genera los 2 documentos del PM con su área
+PASS  Contraloría no puede firmar la declaración del solicitante
+PASS  Firma sin aceptación es rechazada (422)
+PASS  PM firma conflicto de interés e integridad verificada
+PASS  PDF de la declaración generado y documento en Subido
+PASS  Contraloría notificada de la declaración firmada
+PASS  Documentos del proveedor creados con su área
+PASS  PEP declarado sin detalle es rechazado (422)
+PASS  Proveedor firma declaración de relacionados y PEP
+PASS  Alerta PEP enviada a Contraloría y Legal Crediticia
+PASS  Proveedor ve solo su declaración, no la del solicitante
+PASS  Contraloría ve al proveedor (tiene documentos de su área)
+PASS  Contraloría no puede evaluar crédito (solo Legal Crediticia)
+PASS  Semáforo ROJO con referencia comercial pendiente
+PASS  Semáforo AMARILLO con PEP declarado y sin Gesintel
+PASS  Reglas individuales calculadas correctamente
+PASS  Evaluación con datos inválidos rechazada (422)
+PASS  Legal Crediticia consulta DICOM de empresa y representante
+PASS  La consulta persona usa el RUT del representante legal
+PASS  Semáforo lee DICOM automáticamente (empresa sin morosidad, representante con morosidad → ROJO)
+PASS  El detalle indica que la consulta fue simulada
+PASS  Informe PDF generado
+PASS  Informe guardado como documento interno de Legal Crediticia
+PASS  Contraloría no puede aprobar la etapa de Legal Crediticia
+PASS  PM aprueba y Contraloría recibe aviso de etapa disponible
+PASS  Observación de Contraloría notifica al solicitante
+PASS  Contraloría aprueba y Legal Crediticia recibe aviso
+PASS  Legal Crediticia y Legal Judicial aprueban
+PASS  SAP bloqueado mientras falta la aprobación de Datos Maestros
+PASS  Proveedor queda Aprobado con todas las áreas
+PASS  Aviso de aprobación a solicitante, proveedor y Datos Maestros
+PASS  Legal Crediticia no puede enviar a SAP
+PASS  SAP responde OBSERVADO con datos faltantes
+PASS  SAP responde EXITOSO con número simulado
+PASS  SAP responde ERROR por duplicado
+PASS  Plazos por etapa calculados
+PASS  Etapa PM mide ~5 días (creada hace 5 días)
+PASS  Dashboard entrega indicadores de plazos
+PASS  Proveedor no ve indicadores internos de plazos
+PASS  Re-evaluación agrega regla de vigencia de consultas
+PASS  Re-evaluación vuelve a consultar DICOM y detecta la morosidad
+PASS  Re-evaluación manual desde la API
+PASS  Contraloría ve sus notificaciones sin leer
+PASS  Marcar todas como leídas
+PASS  Correos de las notificaciones enviados
+PASS  Comando plazos:revisar se ejecuta
+PASS  Comando proveedores:reevaluar se ejecuta
+
+Resultado: 48 pasaron, 0 fallaron
+Proveedores en la base tras revertir: 100
+Notificaciones en la base tras revertir: 354

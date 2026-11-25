@@ -96,7 +96,7 @@ try {
         'acepta_modelo_prevencion' => true, 'acepta' => true,
     ]);
     check($s === 200 && ($r['data']['declaraPep'] ?? false), 'Proveedor firma declaración de relacionados y PEP', "$s " . json_encode($r));
-    check(DB::table('notificaciones')->where('tipo', 'alerta_pep')->whereIn('user_id', [$CONTRA, $CRED])->count() === 2, 'Alerta PEP enviada a Contraloría y Legal Crediticia');
+    check(DB::table('notificaciones')->where('proveedor_id', $pid)->where('tipo', 'alerta_pep')->whereIn('user_id', [$CONTRA, $CRED])->count() === 2, 'Alerta PEP enviada a Contraloría y Legal Crediticia');
     [$s, $r] = api('GET', "proveedor/solicitudes/$pid/declaraciones", $provUser);
     check($s === 200 && count($r['data']) === 1 && $r['data'][0]['tipo'] === 'relacionados_pep', 'Proveedor ve solo su declaración, no la del solicitante');
     [$s, $r] = api('GET', "interno/proveedores", $CONTRA);
@@ -158,7 +158,7 @@ try {
     [$s] = api('PUT', "validaciones/proveedores/$pid/areas/datos_maestros", $DM, ['status' => 'Aprobado']);
     $estadoProv = DB::table('proveedores')->where('id', $pid)->value('estado');
     check($s === 200 && $estadoProv === 'Aprobado', 'Proveedor queda Aprobado con todas las áreas', "$s $estadoProv");
-    check(DB::table('notificaciones')->where('tipo', 'proveedor_aprobado')->whereIn('user_id', [$PM, $provUser, $DM])->count() === 3, 'Aviso de aprobación a solicitante, proveedor y Datos Maestros');
+    check(DB::table('notificaciones')->where('proveedor_id', $pid)->where('tipo', 'proveedor_aprobado')->whereIn('user_id', [$PM, $provUser, $DM])->count() === 3, 'Aviso de aprobación a solicitante, proveedor y Datos Maestros');
     [$s] = api('POST', "interno/proveedores/$pid/sap/enviar", $CRED);
     check($s === 403, 'Legal Crediticia no puede enviar a SAP', "$s");
     [$s, $r] = api('POST', "interno/proveedores/$pid/sap/enviar", $DM);

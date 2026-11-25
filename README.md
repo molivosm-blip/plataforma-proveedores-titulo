@@ -28,9 +28,11 @@ Requisitos: PHP 8.x con Composer, MySQL, Node.js y Mailpit (para ver los correos
 Desde `api/`:
 
 ```
-vendor\bin\phpunit
+php -d extension=pdo_sqlite -d extension=sqlite3 vendor\phpunit\phpunit\phpunit
 php tests\manual\e2e_proceso.php .
 ```
+
+Los resultados de la última ejecución están en `evidencias/` (PHPUnit: 54 pruebas, 200 aserciones; prueba de punta a punta: 48 verificaciones). PHPUnit usa SQLite en memoria; la prueba de punta a punta corre contra MySQL dentro de una transacción que se revierte.
 
 ## Seguridad
 

@@ -252,7 +252,10 @@ class SeguridadTest extends TestCase
         file_put_contents($dir . '/' . $nombre, '%PDF legacy');
         $url = '/uploads/proveedor_documentos/' . $nombre;
 
-        $this->assertSame($dir . '/' . $nombre, $s->resolver($url));
+        $this->assertSame(
+            str_replace('\\', '/', $dir . '/' . $nombre),
+            str_replace('\\', '/', $s->resolver($url))
+        );
 
         [$movidos] = $s->migrarLegacy();
         $this->assertGreaterThanOrEqual(1, $movidos);

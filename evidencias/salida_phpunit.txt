@@ -1,0 +1,13 @@
+Ejecutado el 25-11-2026 18:05:43,36 
+Comando: php -d extension=pdo_sqlite -d extension=sqlite3 vendor\phpunit\phpunit\phpunit 
+ 
+PHPUnit 10.5.16 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.2.33
+Configuration: C:\Users\marti\OneDrive\Desktop\api-proveedores\phpunit.xml
+
+......................................................            54 / 54 (100%)
+
+Time: 00:10.304, Memory: 34.00 MB
+
+OK (54 tests, 200 assertions)
