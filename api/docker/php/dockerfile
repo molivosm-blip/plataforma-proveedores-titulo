@@ -1,0 +1,3 @@
+FROM dimercsa/dev-php81
+
+CMD /usr/sbin/php-fpm --nodaemonize

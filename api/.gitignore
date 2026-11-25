@@ -1,0 +1,54 @@
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# PHP / Composer
+/vendor/
+/vendor/_laravel_ide/
+composer.phar
+
+# PHPUnit
+.phpunit.result.cache
+.phpunit.cache/
+coverage/
+
+# IDEs and editors
+/.idea/
+/.vscode/
+*.code-workspace
+
+# Homestead
+Homestead.json
+Homestead.yaml
+
+# Runtime files
+/storage/logs/*.log
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+
+# Keep required storage directories
+!/storage/logs/.gitignore
+!/storage/framework/cache/.gitignore
+!/storage/framework/sessions/.gitignore
+!/storage/framework/views/.gitignore
+
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Local backups and temporary files
+*.bak
+*.tmp
+*.temp
+*.swp
+*~
+
+# Local generated files
+/public/uploads/
+/storage/app/uploads/
+/public/storage/
+
+/tools/
