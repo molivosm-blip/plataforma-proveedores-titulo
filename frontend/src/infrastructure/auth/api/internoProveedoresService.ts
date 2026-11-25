@@ -939,7 +939,13 @@ export class InternoProveedoresService {
         `/documentos/${encodeURIComponent(
           documentoId
         )}/upload`,
-        formData
+        formData,
+        {
+          headers: {
+            'Content-Type':
+              'multipart/form-data',
+          },
+        }
       );
 
     return normalizeUploadResult(

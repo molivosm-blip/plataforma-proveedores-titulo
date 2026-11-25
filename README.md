@@ -14,6 +14,17 @@ Propuesta de una plataforma web para la gestión de proveedores y validación do
 
 La integración con SAP, DICOM y AMLUpdate está **simulada** (diseño de integración), tal como se describe en el informe.
 
+## Demostración en video
+
+Recorrido completo del flujo con datos de demostración ficticios: invitación del PM, carga y firma de documentos del proveedor, validación en cada área (Contraloría, PM, Legal Crediticia, Legal Judicial y Datos Maestros), consultas Gesintel/AML y DICOM, semáforo crediticio y envío a SAP (simulado).
+
+| Video | Duración |
+|---|---|
+| [Demo explicada paso a paso](demo/video_demo_explicado_paso_a_paso.mp4) | ~8 min |
+| [Demo corta](demo/video_demo_corto.mp4) | 36 s |
+
+Los videos están hechos con capturas de la aplicación en ejecución (Gesintel/AML en ambiente QA; DICOM y SAP en modo simulado).
+
 ## Cómo ejecutarlo en local
 
 Requisitos: PHP 8.x con Composer, MySQL, Node.js y Mailpit (para ver los correos de prueba).
