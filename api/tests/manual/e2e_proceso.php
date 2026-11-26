@@ -49,7 +49,7 @@ try {
     [$s, $r] = api('POST', 'interno/proveedores/solicitud', $PM, [
         'emailProveedor' => 'demo@proveedor.test', 'empresaIds' => ['DIMERC', 'RHEIN'],
         'tipo' => 'Nacional', 'tipoProveedorDetalle' => 'Proveedor de productos nacional',
-        'razonSocial' => 'Proveedor Demo Prueba SpA', 'rut' => '76.123.456-7', 'giro' => 'Venta de insumos',
+        'razonSocial' => 'Proveedor Demo Prueba SpA', 'rut' => '99.887.766-0', 'giro' => 'Venta de insumos',
     ]);
     check($s === 200 || $s === 201, 'PM crea solicitud preliminar', "$s " . json_encode($r));
     $pid = (int) DB::table('proveedores')->max('id');
@@ -120,11 +120,11 @@ try {
 
     // 5b. DICOM (en modo simulado fuera de la red de Dimerc)
     DB::table('proveedor_detalles')->where('proveedor_id', $pid)->update(['representante_legal' => 'Representante Demo', 'representante_ci' => '12.345.679-K']);
-    [$s, $r] = api('POST', 'interno/proveedores/76123456-7/dicom/empresa', $CRED);
-    [$s2, $r2] = api('POST', 'interno/proveedores/76123456-7/dicom/persona', $CRED);
+    [$s, $r] = api('POST', 'interno/proveedores/99887766-0/dicom/empresa', $CRED);
+    [$s2, $r2] = api('POST', 'interno/proveedores/99887766-0/dicom/persona', $CRED);
     check($s === 200 && $s2 === 200, 'Legal Crediticia consulta DICOM de empresa y representante', "$s $s2 " . json_encode($r));
     $rutPersona = DB::table('proveedor_dicom_checks')->where('proveedor_id', $pid)->where('segmento', 'persona')->value('rut');
-    check($rutPersona === '12345679K', 'La consulta persona usa el RUT del representante legal', (string) $rutPersona);
+    check($rutPersona === '12345679K', 'La consulta persona usa el RUT del representante legal', 'rut=' . (string) $rutPersona . ' checks=' . json_encode(DB::table('proveedor_dicom_checks')->where('proveedor_id', $pid)->get(['endpoint', 'segmento', 'rut', 'http_code'])) . ' modo=' . env('DICOM_MODO'));
     [$s, $r] = api('POST', "interno/proveedores/$pid/evaluacion-crediticia", $CRED, ['fecha_inicio_actividades' => '2019-03-01', 'dicom_resultado' => 'no_consultado', 'dicom_representante_resultado' => 'no_consultado']);
     $reglasDicom = array_column($r['data']['reglas'] ?? [], null, 'clave');
     check(
@@ -164,6 +164,11 @@ try {
     [$s, $r] = api('POST', "interno/proveedores/$pid/sap/enviar", $DM);
     check($s === 200 && $r['data']['estado'] === 'observado', 'SAP responde OBSERVADO con datos faltantes', "$s " . ($r['data']['respuesta']['mensaje'] ?? json_encode($r)));
     DB::table('proveedor_detalles')->where('proveedor_id', $pid)->update(['direccion' => 'Av. Demo 123', 'comuna' => 'Santiago', 'banco_pago' => 'Banco Demo', 'cuenta_corriente' => '000123456', 'persona_contacto' => 'Contacto Demo', 'persona_contacto_email' => 'contacto@proveedor.test', 'plazo_pago' => '30 días']);
+    // SAP no responde: el portal informa el error sin caerse y el envío se puede reintentar.
+    putenv('SAP_MOCK_FORZAR_ERROR=true'); $_ENV['SAP_MOCK_FORZAR_ERROR'] = $_SERVER['SAP_MOCK_FORZAR_ERROR'] = 'true';
+    [$s, $r] = api('POST', "interno/proveedores/$pid/sap/enviar", $DM);
+    check($s === 200 && $r['data']['estado'] === 'error' && ($r['data']['respuesta']['codigo'] ?? '') === 'E-TIMEOUT' && empty($r['data']['numeroProveedorSap']), 'SAP sin respuesta (E-TIMEOUT): error controlado, sin número asignado', "$s " . json_encode($r['data'] ?? $r));
+    putenv('SAP_MOCK_FORZAR_ERROR=false'); $_ENV['SAP_MOCK_FORZAR_ERROR'] = $_SERVER['SAP_MOCK_FORZAR_ERROR'] = 'false';
     [$s, $r] = api('POST', "interno/proveedores/$pid/sap/enviar", $DM);
     check($s === 200 && $r['data']['estado'] === 'exitoso' && str_starts_with((string) $r['data']['numeroProveedorSap'], 'MOCK'), 'SAP responde EXITOSO con número simulado', ($r['data']['numeroProveedorSap'] ?? json_encode($r)));
     [$s, $r] = api('POST', "interno/proveedores/$pid/sap/enviar", $DM);

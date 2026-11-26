@@ -199,6 +199,17 @@ class ProveedoresController extends Controller
                 )
             );
 
+            if (
+                $rut !== 'Pendiente'
+                && $request->input('tipo') === 'Nacional'
+                && !app(\App\Services\RutService::class)->esValido($rut)
+            ) {
+                return $this->responseData([
+                    'error' => true,
+                    'message' => 'El RUT no es válido. Revise el número y el dígito verificador.',
+                ], 422);
+            }
+
             $giro = trim(
                 (string) (
                     $request->input('giro')
@@ -335,6 +346,8 @@ class ProveedoresController extends Controller
                     'interno'
                 ),
             ], 201);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->respuestaValidacion($e, isset($transactionStarted) && $transactionStarted);
         } catch (\Exception $e) {
             if ($transactionStarted) {
                 DB::rollBack();
@@ -383,6 +396,8 @@ class ProveedoresController extends Controller
             return $this->responseData([
                 'data' => $proveedores,
             ], 200);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->respuestaValidacion($e, isset($transactionStarted) && $transactionStarted);
         } catch (\Exception $e) {
             return $this->responseData([
                 'error' => true,
@@ -424,6 +439,8 @@ class ProveedoresController extends Controller
             return $this->responseData([
                 'data' => $proveedores,
             ], 200);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->respuestaValidacion($e, isset($transactionStarted) && $transactionStarted);
         } catch (\Exception $e) {
             return $this->responseData([
                 'error' => true,
@@ -541,6 +558,8 @@ class ProveedoresController extends Controller
                     'interno'
                 ),
             ], 200);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->respuestaValidacion($e, isset($transactionStarted) && $transactionStarted);
         } catch (\Exception $e) {
             if ($transactionStarted) {
                 DB::rollBack();
@@ -618,6 +637,8 @@ class ProveedoresController extends Controller
                     'interno'
                 ),
             ], 200);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->respuestaValidacion($e, isset($transactionStarted) && $transactionStarted);
         } catch (\Exception $e) {
             if ($transactionStarted) {
                 DB::rollBack();
@@ -687,6 +708,8 @@ class ProveedoresController extends Controller
                     'interno'
                 ),
             ], 200);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->respuestaValidacion($e, isset($transactionStarted) && $transactionStarted);
         } catch (\Exception $e) {
             if ($transactionStarted) {
                 DB::rollBack();
@@ -721,6 +744,16 @@ class ProveedoresController extends Controller
                 'empresa_id' => 'required|string',
                 'giro' => 'required|string',
             ]);
+
+            if (
+                $request->input('tipo') === 'Nacional'
+                && !app(\App\Services\RutService::class)->esValido($request->input('rut'))
+            ) {
+                return $this->responseData([
+                    'error' => true,
+                    'message' => 'El RUT no es válido. Revise el número y el dígito verificador.',
+                ], 422);
+            }
 
             $empresaId = $this->resolveEmpresaId(
                 $request->input('empresa_id')
@@ -769,6 +802,8 @@ class ProveedoresController extends Controller
                     'interno'
                 ),
             ], 201);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->respuestaValidacion($e, isset($transactionStarted) && $transactionStarted);
         } catch (\Exception $e) {
             return $this->responseData([
                 'error' => true,

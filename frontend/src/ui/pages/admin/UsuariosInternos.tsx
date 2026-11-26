@@ -29,6 +29,7 @@ const ROLES_GLOBAL: UserRole[] = [
   'pm_user',
   'admin_area',
   'usuario_area',
+  'auditor',
 ];
 
 const ROLES_ADMIN_AREA: UserRole[] = ['usuario_area'];

@@ -16,6 +16,7 @@ const getDefaultRedirectByRole = (role: UserRole | null): string => {
     case 'admin_portal':
     case 'admin_area':
     case 'usuario_area':
+    case 'auditor':
       return '/proveedores/seguimiento';
 
     default:

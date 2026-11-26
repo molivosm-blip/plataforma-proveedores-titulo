@@ -56,6 +56,8 @@ class PmUsersController extends Controller
                 'data'    => $this->mapUser($pmUser),
             ], 201);
 
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->respuestaValidacion($e, isset($transactionStarted) && $transactionStarted);
         } catch (\Exception $e) {
             return $this->responseData([
                 'error' => true,
@@ -93,6 +95,8 @@ class PmUsersController extends Controller
                 'data' => $pmUsers,
             ], 200);
 
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->respuestaValidacion($e, isset($transactionStarted) && $transactionStarted);
         } catch (\Exception $e) {
             return $this->responseData([
                 'error' => true,
@@ -147,6 +151,8 @@ class PmUsersController extends Controller
                 'message' => 'PM Usuario eliminado correctamente',
             ], 200);
 
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->respuestaValidacion($e, isset($transactionStarted) && $transactionStarted);
         } catch (\Exception $e) {
             return $this->responseData([
                 'error' => true,
@@ -213,6 +219,8 @@ class PmUsersController extends Controller
                 'data' => $proveedores,
             ], 200);
 
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->respuestaValidacion($e, isset($transactionStarted) && $transactionStarted);
         } catch (\Exception $e) {
             return $this->responseData([
                 'error' => true,

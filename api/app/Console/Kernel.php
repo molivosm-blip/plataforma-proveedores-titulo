@@ -18,6 +18,10 @@ class Kernel extends ConsoleKernel
         Commands\AplicarSeguridad::class,
         Commands\AplicarCuenta::class,
         Commands\ReconciliarEstados::class,
+        Commands\AplicarMejoras::class,
+        Commands\CrearUsuarioInterno::class,
+        Commands\RecordarDocumentos::class,
+        Commands\RevisarVencimientos::class,
     ];
 
     /**
@@ -33,5 +37,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('plazos:revisar')->dailyAt('08:30');
         $schedule->command('proveedores:reevaluar')->monthlyOn(1, '07:00');
+        $schedule->command('proveedores:recordar')->dailyAt('09:00');
+        $schedule->command('documentos:vencimientos')->dailyAt('08:45');
     }
 }

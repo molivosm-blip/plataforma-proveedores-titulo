@@ -17,6 +17,8 @@ import SeguimientoProveedores from '../ui/pages/proveedores/seguimiento/Seguimie
 import CrearProveedor from '../ui/pages/proveedores/crear/CrearProveedor';
 import MisSolicitudesProveedor from '../ui/pages/proveedores/misSolicitudes/MisSolicitudesProveedor';
 import ActivarProveedor from '../ui/pages/proveedores/registro/ActivarProveedor';
+import OlvideClave from '../ui/pages/LoginPage/OlvideClave';
+import RestablecerClave from '../ui/pages/LoginPage/RestablecerClave';
 import UsuariosInternos from '../ui/pages/admin/UsuariosInternos';
 import MiCuenta from '../ui/pages/cuenta/MiCuenta';
 
@@ -30,6 +32,7 @@ const INTERNAL_ROLES: UserRole[] = [
   'admin_portal',
   'admin_area',
   'usuario_area',
+  'auditor',
 ];
 
 const CAN_INVITE_PROVEEDOR_ROLES: UserRole[] = [
@@ -72,6 +75,14 @@ const routes: RouteObject[] = [
   {
     path: ROUTES.PROVEEDOR_PUBLICO.ACTIVAR,
     element: <ActivarProveedor />,
+  },
+  {
+    path: ROUTES.OLVIDE_CLAVE,
+    element: <OlvideClave />,
+  },
+  {
+    path: ROUTES.RESTABLECER_CLAVE,
+    element: <RestablecerClave />,
   },
   {
     element: <RequireAuth />,

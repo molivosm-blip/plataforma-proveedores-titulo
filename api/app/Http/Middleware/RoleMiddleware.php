@@ -18,6 +18,14 @@ class RoleMiddleware
 
         $userRole = $request->auth->role;
 
+        // El auditor es de solo lectura: cualquier método que no sea de consulta se rechaza.
+        if ($userRole === 'auditor' && !in_array($request->method(), ['GET', 'HEAD'], true)) {
+            return response()->json([
+                'error' => true,
+                'message' => 'El rol auditor es de solo lectura'
+            ], 403);
+        }
+
         // Validar si el rol del usuario está permitido
         if (!in_array($userRole, $roles)) {
             return response()->json([

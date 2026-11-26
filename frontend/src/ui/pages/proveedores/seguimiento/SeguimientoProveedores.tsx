@@ -270,7 +270,7 @@ const canViewProveedor = (
   userEmail?: string,
   userArea?: string | null
 ): boolean => {
-  if (isAdminGlobalRole(role)) {
+  if (isAdminGlobalRole(role) || role === 'auditor') {
     return true;
   }
 
@@ -1138,12 +1138,35 @@ const SeguimientoProveedores: React.FC =
         }
       };
 
+    const handleExportarCsv =
+      async (): Promise<void> => {
+        try {
+          setError(null);
+          await InternoProveedoresService
+            .exportarProveedoresCsv(
+              filtroEstado !== 'Todos'
+                ? filtroEstado
+                : undefined
+            );
+          setSuccess(
+            'Listado exportado. Ábrelo con Excel.'
+          );
+        } catch (caught: unknown) {
+          const err = caught as ApiError;
+          setError(
+            err?.response?.data?.message ||
+              'No se pudo exportar el listado.'
+          );
+        }
+      };
+
     const handleRevisarDocumento =
       async (
         proveedor: Proveedor,
         documentoId: string,
         estado: EstadoDocumento,
-        comentario?: string
+        comentario?: string,
+        fechaVencimiento?: string
       ): Promise<void> => {
         const documento =
           proveedor.documentos.find(
@@ -1180,7 +1203,8 @@ const SeguimientoProveedores: React.FC =
               .revisarDocumento(
                 documentoId,
                 estado,
-                comentario
+                comentario,
+                fechaVencimiento
               );
 
           await refreshSeleccionado(
@@ -1502,6 +1526,14 @@ const SeguimientoProveedores: React.FC =
                 + Crear proveedor
               </button>
             )}
+
+            <button
+              type="button"
+              style={styles.filterButton}
+              onClick={handleExportarCsv}
+            >
+              Exportar a Excel (CSV)
+            </button>
           </div>
 
           <div style={styles.selectWrap}>
@@ -2096,7 +2128,8 @@ interface ModalDocumentosProveedorProps {
     proveedor: Proveedor,
     documentoId: string,
     estado: EstadoDocumento,
-    comentario?: string
+    comentario?: string,
+    fechaVencimiento?: string
   ) => void | Promise<void>;
 
   onRegenerarFichaPdf: (
@@ -2123,6 +2156,13 @@ const ModalDocumentosProveedor: React.FC<
   const [
     documentoComments,
     setDocumentoComments,
+  ] = useState<
+    Record<string, string>
+  >({});
+
+  const [
+    documentoVencimientos,
+    setDocumentoVencimientos,
   ] = useState<
     Record<string, string>
   >({});
@@ -2568,6 +2608,32 @@ const ModalDocumentosProveedor: React.FC<
                         Observar
                       </button>
 
+                      <label
+                        style={styles.docMeta}
+                      >
+                        Vence:{' '}
+                        <input
+                          type="date"
+                          value={
+                            documentoVencimientos[
+                              documento.id
+                            ] ??
+                            documento.fechaVencimiento ??
+                            ''
+                          }
+                          onChange={event =>
+                            setDocumentoVencimientos(
+                              previous => ({
+                                ...previous,
+                                [documento.id]:
+                                  event.target
+                                    .value,
+                              })
+                            )
+                          }
+                        />
+                      </label>
+
                       <button
                         type="button"
                         style={
@@ -2578,7 +2644,11 @@ const ModalDocumentosProveedor: React.FC<
                             proveedor,
                             documento.id,
                             'Aprobado',
-                            comentario
+                            comentario,
+                            documentoVencimientos[
+                              documento.id
+                            ] ??
+                              documento.fechaVencimiento
                           )
                         }
                       >

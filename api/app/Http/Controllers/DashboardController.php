@@ -342,6 +342,10 @@ class DashboardController extends Controller
             return 'Global';
         }
 
+        if ($this->permissions->isAuditor($user)) {
+            return 'Auditoría (solo lectura)';
+        }
+
         if ($this->permissions->isProveedor($user)) {
             return 'Mi cuenta';
         }

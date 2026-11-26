@@ -32,7 +32,17 @@ class AreaPermissionService
             'admin_portal',
             'admin_area',
             'usuario_area',
+            'auditor',
         ], true);
+    }
+
+    /**
+     * Auditor: ve todo el proceso pero no puede modificar nada.
+     * La restricción de solo lectura la aplica RoleMiddleware (solo GET).
+     */
+    public function isAuditor(User $user): bool
+    {
+        return $user->role === 'auditor';
     }
 
     public function isAreaUser(User $user): bool
@@ -145,7 +155,7 @@ class AreaPermissionService
 
     public function canViewProveedor(User $user, Proveedores $proveedor): bool
     {
-        if ($this->isAdminGlobal($user)) {
+        if ($this->isAdminGlobal($user) || $this->isAuditor($user)) {
             return true;
         }
 
@@ -267,7 +277,7 @@ class AreaPermissionService
             return false;
         }
 
-        if ($this->isAdminGlobal($user)) {
+        if ($this->isAdminGlobal($user) || $this->isAuditor($user)) {
             return (int) $documento->visible_para_internos === 1;
         }
 
@@ -442,7 +452,7 @@ class AreaPermissionService
         Proveedores $proveedor,
         ProveedorWorkflowStep $step
     ): bool {
-        if ($this->isAdminGlobal($user)) {
+        if ($this->isAdminGlobal($user) || $this->isAuditor($user)) {
             return true;
         }
 
@@ -503,7 +513,7 @@ class AreaPermissionService
         Proveedores $proveedor,
         ProveedorValidacion $validacion
     ): bool {
-        if ($this->isAdminGlobal($user)) {
+        if ($this->isAdminGlobal($user) || $this->isAuditor($user)) {
             return true;
         }
 
@@ -561,7 +571,7 @@ class AreaPermissionService
 
     public function applyProveedorVisibilityQuery($query, User $user): void
     {
-        if ($this->isAdminGlobal($user)) {
+        if ($this->isAdminGlobal($user) || $this->isAuditor($user)) {
             return;
         }
 

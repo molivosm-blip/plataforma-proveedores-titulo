@@ -1,15 +1,16 @@
-Ejecutado el 25-11-2026 18:05:53,88 
-Comando: php tests\manual\e2e_proceso.php . 
- 
 PASS  PM crea solicitud preliminar
 PASS  Catálogo genera los 2 documentos del PM con su área
 PASS  Contraloría no puede firmar la declaración del solicitante
 PASS  Firma sin aceptación es rechazada (422)
+Correo no enviado por SMTP, queda en el registro: No fue posible conectar con el servidor SMTP 127.0.0.1:1025: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
 PASS  PM firma conflicto de interés e integridad verificada
 PASS  PDF de la declaración generado y documento en Subido
 PASS  Contraloría notificada de la declaración firmada
 PASS  Documentos del proveedor creados con su área
 PASS  PEP declarado sin detalle es rechazado (422)
+Correo no enviado por SMTP, queda en el registro: No fue posible conectar con el servidor SMTP 127.0.0.1:1025: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
+Correo no enviado por SMTP, queda en el registro: No fue posible conectar con el servidor SMTP 127.0.0.1:1025: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
+Correo no enviado por SMTP, queda en el registro: No fue posible conectar con el servidor SMTP 127.0.0.1:1025: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
 PASS  Proveedor firma declaración de relacionados y PEP
 PASS  Alerta PEP enviada a Contraloría y Legal Crediticia
 PASS  Proveedor ve solo su declaración, no la del solicitante
@@ -26,15 +27,25 @@ PASS  El detalle indica que la consulta fue simulada
 PASS  Informe PDF generado
 PASS  Informe guardado como documento interno de Legal Crediticia
 PASS  Contraloría no puede aprobar la etapa de Legal Crediticia
+Correo no enviado por SMTP, queda en el registro: No fue posible conectar con el servidor SMTP 127.0.0.1:1025: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
 PASS  PM aprueba y Contraloría recibe aviso de etapa disponible
+Correo no enviado por SMTP, queda en el registro: No fue posible conectar con el servidor SMTP 127.0.0.1:1025: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
 PASS  Observación de Contraloría notifica al solicitante
+Correo no enviado por SMTP, queda en el registro: No fue posible conectar con el servidor SMTP 127.0.0.1:1025: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
 PASS  Contraloría aprueba y Legal Crediticia recibe aviso
+Correo no enviado por SMTP, queda en el registro: No fue posible conectar con el servidor SMTP 127.0.0.1:1025: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
+Correo no enviado por SMTP, queda en el registro: No fue posible conectar con el servidor SMTP 127.0.0.1:1025: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
 PASS  Legal Crediticia y Legal Judicial aprueban
 PASS  SAP bloqueado mientras falta la aprobación de Datos Maestros
+Correo no enviado por SMTP, queda en el registro: No fue posible conectar con el servidor SMTP 127.0.0.1:1025: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
+Correo no enviado por SMTP, queda en el registro: No fue posible conectar con el servidor SMTP 127.0.0.1:1025: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
+Correo no enviado por SMTP, queda en el registro: No fue posible conectar con el servidor SMTP 127.0.0.1:1025: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
 PASS  Proveedor queda Aprobado con todas las áreas
 PASS  Aviso de aprobación a solicitante, proveedor y Datos Maestros
 PASS  Legal Crediticia no puede enviar a SAP
 PASS  SAP responde OBSERVADO con datos faltantes
+PASS  SAP sin respuesta (E-TIMEOUT): error controlado, sin número asignado
+Correo no enviado por SMTP, queda en el registro: No fue posible conectar con el servidor SMTP 127.0.0.1:1025: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
 PASS  SAP responde EXITOSO con número simulado
 PASS  SAP responde ERROR por duplicado
 PASS  Plazos por etapa calculados
@@ -47,9 +58,33 @@ PASS  Re-evaluación manual desde la API
 PASS  Contraloría ve sus notificaciones sin leer
 PASS  Marcar todas como leídas
 PASS  Correos de las notificaciones enviados
+Correo no enviado por SMTP, queda en el registro: No fue posible conectar con el servidor SMTP 127.0.0.1:1025: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
+Correo no enviado por SMTP, queda en el registro: No fue posible conectar con el servidor SMTP 127.0.0.1:1025: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
+Correo no enviado por SMTP, queda en el registro: No fue posible conectar con el servidor SMTP 127.0.0.1:1025: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
+Correo no enviado por SMTP, queda en el registro: No fue posible conectar con el servidor SMTP 127.0.0.1:1025: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
+Correo no enviado por SMTP, queda en el registro: No fue posible conectar con el servidor SMTP 127.0.0.1:1025: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
+Correo no enviado por SMTP, queda en el registro: No fue posible conectar con el servidor SMTP 127.0.0.1:1025: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
+Correo no enviado por SMTP, queda en el registro: No fue posible conectar con el servidor SMTP 127.0.0.1:1025: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
+Correo no enviado por SMTP, queda en el registro: No fue posible conectar con el servidor SMTP 127.0.0.1:1025: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
+Correo no enviado por SMTP, queda en el registro: No fue posible conectar con el servidor SMTP 127.0.0.1:1025: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
+Correo no enviado por SMTP, queda en el registro: No fue posible conectar con el servidor SMTP 127.0.0.1:1025: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
+Correo no enviado por SMTP, queda en el registro: No fue posible conectar con el servidor SMTP 127.0.0.1:1025: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
+Correo no enviado por SMTP, queda en el registro: No fue posible conectar con el servidor SMTP 127.0.0.1:1025: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
+Correo no enviado por SMTP, queda en el registro: No fue posible conectar con el servidor SMTP 127.0.0.1:1025: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
+Correo no enviado por SMTP, queda en el registro: No fue posible conectar con el servidor SMTP 127.0.0.1:1025: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
+Correo no enviado por SMTP, queda en el registro: No fue posible conectar con el servidor SMTP 127.0.0.1:1025: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
+Correo no enviado por SMTP, queda en el registro: No fue posible conectar con el servidor SMTP 127.0.0.1:1025: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
+Correo no enviado por SMTP, queda en el registro: No fue posible conectar con el servidor SMTP 127.0.0.1:1025: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
+Correo no enviado por SMTP, queda en el registro: No fue posible conectar con el servidor SMTP 127.0.0.1:1025: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
+Correo no enviado por SMTP, queda en el registro: No fue posible conectar con el servidor SMTP 127.0.0.1:1025: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
+Correo no enviado por SMTP, queda en el registro: No fue posible conectar con el servidor SMTP 127.0.0.1:1025: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
+Correo no enviado por SMTP, queda en el registro: No fue posible conectar con el servidor SMTP 127.0.0.1:1025: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
+Correo no enviado por SMTP, queda en el registro: No fue posible conectar con el servidor SMTP 127.0.0.1:1025: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
+Correo no enviado por SMTP, queda en el registro: No fue posible conectar con el servidor SMTP 127.0.0.1:1025: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
+Correo no enviado por SMTP, queda en el registro: No fue posible conectar con el servidor SMTP 127.0.0.1:1025: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
 PASS  Comando plazos:revisar se ejecuta
 PASS  Comando proveedores:reevaluar se ejecuta
 
-Resultado: 48 pasaron, 0 fallaron
-Proveedores en la base tras revertir: 100
-Notificaciones en la base tras revertir: 354
+Resultado: 49 pasaron, 0 fallaron
+Proveedores en la base tras revertir: 102
+Notificaciones en la base tras revertir: 366

@@ -25,6 +25,8 @@ export interface CambiarEstadoProveedorPayload {
 export interface RevisarDocumentoPayload {
   estado: EstadoDocumento;
   comentario?: string;
+  /** Fecha (AAAA-MM-DD) en que vence el documento aprobado. */
+  fechaVencimiento?: string;
 }
 
 export interface ActualizarValidacionPayload {
@@ -769,6 +771,36 @@ export class InternoProveedoresService {
   |--------------------------------------------------------------------------
   */
 
+  /**
+   * Descarga el listado de proveedores visibles en CSV (abre en Excel).
+   */
+  static async exportarProveedoresCsv(
+    estado?: string
+  ): Promise<void> {
+    const response = await apiClient.get(
+      '/interno/proveedores/exportar',
+      {
+        params: estado ? { estado } : undefined,
+        responseType: 'blob',
+      }
+    );
+
+    const url = URL.createObjectURL(
+      new Blob([response.data], {
+        type: 'text/csv;charset=utf-8',
+      })
+    );
+    const enlace = document.createElement('a');
+    enlace.href = url;
+    enlace.download = `proveedores_${new Date()
+      .toISOString()
+      .slice(0, 10)}.csv`;
+    document.body.appendChild(enlace);
+    enlace.click();
+    enlace.remove();
+    URL.revokeObjectURL(url);
+  }
+
   static async getProveedores(): Promise<
     Proveedor[]
   > {
@@ -894,7 +926,8 @@ export class InternoProveedoresService {
   static async revisarDocumento(
     documentoId: string,
     estado: EstadoDocumento,
-    comentario?: string
+    comentario?: string,
+    fechaVencimiento?: string
   ): Promise<Proveedor | null> {
     const response =
       await apiClient.put(
@@ -904,6 +937,9 @@ export class InternoProveedoresService {
         {
           estado,
           comentario,
+          ...(fechaVencimiento
+            ? { fechaVencimiento }
+            : {}),
         } satisfies RevisarDocumentoPayload
       );
 
@@ -939,13 +975,7 @@ export class InternoProveedoresService {
         `/documentos/${encodeURIComponent(
           documentoId
         )}/upload`,
-        formData,
-        {
-          headers: {
-            'Content-Type':
-              'multipart/form-data',
-          },
-        }
+        formData
       );
 
     return normalizeUploadResult(

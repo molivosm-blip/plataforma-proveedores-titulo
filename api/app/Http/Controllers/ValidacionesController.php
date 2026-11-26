@@ -75,6 +75,8 @@ class ValidacionesController extends Controller
                 ],
             ], 200);
 
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->respuestaValidacion($e, isset($transactionStarted) && $transactionStarted);
         } catch (\Exception $e) {
             return $this->responseData([
                 'error' => true,
@@ -149,6 +151,8 @@ class ValidacionesController extends Controller
                 'data' => $items,
             ], 200);
 
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->respuestaValidacion($e, isset($transactionStarted) && $transactionStarted);
         } catch (\Exception $e) {
             return $this->responseData([
                 'error' => true,
@@ -261,6 +265,8 @@ class ValidacionesController extends Controller
                 'data'    => $this->mapValidacion($validacion),
             ], 200);
 
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->respuestaValidacion($e, isset($transactionStarted) && $transactionStarted);
         } catch (\Exception $e) {
             if ($transactionStarted) {
                 DB::rollBack();
@@ -335,6 +341,8 @@ class ValidacionesController extends Controller
                 'data'    => $this->mapValidacion($validacion),
             ], 200);
 
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->respuestaValidacion($e, isset($transactionStarted) && $transactionStarted);
         } catch (\Exception $e) {
             if ($transactionStarted) {
                 DB::rollBack();

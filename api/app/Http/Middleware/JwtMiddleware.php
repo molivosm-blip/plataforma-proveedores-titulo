@@ -38,6 +38,14 @@ class JwtMiddleware
                 ], 401);
             }
 
+            // Una cuenta desactivada pierde el acceso aunque su token no haya vencido.
+            if ($user->active !== null && (int) $user->active !== 1) {
+                return response()->json([
+                    'error' => true,
+                    'message' => 'Usuario inactivo'
+                ], 401);
+            }
+
             // ✅ Inyectamos usuario autenticado en el request
             $request->auth = $user;
 

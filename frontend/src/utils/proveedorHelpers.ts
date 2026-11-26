@@ -156,6 +156,7 @@ export interface DocumentoProveedor {
   plantilla_url?: string | null;
 
   comentario?: string;
+  fechaVencimiento?: string;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -615,6 +616,11 @@ const normalizeDocumento = (doc: RawApiData, index: number): DocumentoProveedor 
   const comentario = toStringOrNull(doc?.comentario);
   if (comentario) {
     documento.comentario = comentario;
+  }
+
+  const fechaVencimiento = toStringOrNull(doc?.fechaVencimiento ?? doc?.fecha_vencimiento);
+  if (fechaVencimiento) {
+    documento.fechaVencimiento = fechaVencimiento.slice(0, 10);
   }
 
   const createdAt = toStringOrNull(doc?.createdAt ?? doc?.created_at);

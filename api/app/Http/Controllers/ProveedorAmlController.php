@@ -729,6 +729,16 @@ class ProveedorAmlController extends Controller
 
         if (
             $error instanceof
+            \App\Exceptions\ServicioExternoNoDisponibleException
+        ) {
+            return $this->responseData([
+                'error' => true,
+                'message' => $error->mensajeParaUsuario(),
+            ], 503);
+        }
+
+        if (
+            $error instanceof
             \Illuminate\Database\Eloquent\ModelNotFoundException
         ) {
             $statusCode = 404;

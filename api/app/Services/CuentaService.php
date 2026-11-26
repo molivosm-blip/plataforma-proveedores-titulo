@@ -43,7 +43,7 @@ class CuentaService
         'documentos' => [
             'titulo'      => 'Documentos y declaraciones',
             'descripcion' => 'Documentos subidos u observados y declaraciones firmadas.',
-            'tipos'       => ['documento_subido', 'documento_observado', 'declaracion_firmada'],
+            'tipos'       => ['documento_subido', 'documento_observado', 'declaracion_firmada', 'recordatorio_documentos', 'documento_por_vencer', 'documento_vencido'],
             'roles'       => null,
         ],
         'plazos' => [

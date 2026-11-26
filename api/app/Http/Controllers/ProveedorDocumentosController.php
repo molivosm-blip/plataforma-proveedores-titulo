@@ -148,6 +148,8 @@ class ProveedorDocumentosController extends Controller
                 'data'    => $this->mapDocumento($doc),
             ], 201);
 
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->respuestaValidacion($e, isset($transactionStarted) && $transactionStarted);
         } catch (\Exception $e) {
             if ($transactionStarted) {
                 DB::rollBack();
@@ -200,6 +202,8 @@ class ProveedorDocumentosController extends Controller
                 'data' => $docs,
             ], 200);
 
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->respuestaValidacion($e, isset($transactionStarted) && $transactionStarted);
         } catch (\Exception $e) {
             return $this->responseData([
                 'error'   => true,
@@ -238,6 +242,8 @@ class ProveedorDocumentosController extends Controller
                 'data' => $docs,
             ], 200);
 
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->respuestaValidacion($e, isset($transactionStarted) && $transactionStarted);
         } catch (\Exception $e) {
             return $this->responseData([
                 'error'   => true,
@@ -272,6 +278,7 @@ class ProveedorDocumentosController extends Controller
             $this->validate($request, [
                 'estado'     => 'required|in:Pendiente,Subido,Observado,Aprobado',
                 'comentario' => 'nullable|string',
+                'fechaVencimiento' => 'nullable|date',
             ]);
 
             $doc = ProveedorDocumento::with('proveedor')->findOrFail($id);
@@ -290,6 +297,18 @@ class ProveedorDocumentosController extends Controller
 
             $doc->estado = $request->input('estado');
             $doc->comentario = $request->input('comentario');
+
+            /*
+             * Vencimiento del documento (certificados, vigencias). Solo se
+             * guarda si la base ya tiene la columna (php artisan mejoras:aplicar).
+             */
+            if (
+                $request->has('fechaVencimiento')
+                && \Illuminate\Support\Facades\Schema::hasColumn('proveedor_documentos', 'fecha_vencimiento')
+            ) {
+                $doc->fecha_vencimiento = $request->input('fechaVencimiento') ?: null;
+            }
+
             $doc->reviewed_by_user_id = $user->id;
             $doc->reviewed_at = date('Y-m-d H:i:s');
             $doc->updated_at = date('Y-m-d H:i:s');
@@ -339,6 +358,8 @@ class ProveedorDocumentosController extends Controller
                 'data'    => $this->mapDocumentoConProveedor($doc),
             ], 200);
 
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->respuestaValidacion($e, isset($transactionStarted) && $transactionStarted);
         } catch (\Exception $e) {
             if ($transactionStarted) {
                 DB::rollBack();
@@ -496,6 +517,8 @@ class ProveedorDocumentosController extends Controller
                 'data'    => $this->mapDocumentoConProveedor($doc),
             ], 200);
 
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->respuestaValidacion($e, isset($transactionStarted) && $transactionStarted);
         } catch (\Exception $e) {
             if ($transactionStarted) {
                 DB::rollBack();
@@ -720,6 +743,8 @@ class ProveedorDocumentosController extends Controller
                 : null,
 
             'comentario' => $d->comentario,
+
+            'fechaVencimiento' => $d->fecha_vencimiento ?? null,
 
             'reviewedByUserId' => $d->reviewed_by_user_id
                 ? (string) $d->reviewed_by_user_id

@@ -137,6 +137,8 @@ class ProveedorInvitationsController extends Controller
                     $activationLink
                 ),
             ], 201);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->respuestaValidacion($e, isset($transactionStarted) && $transactionStarted);
         } catch (\Exception $e) {
             return $this->responseData([
                 'error' => true,
@@ -187,6 +189,8 @@ class ProveedorInvitationsController extends Controller
             return $this->responseData([
                 'data' => $items,
             ], 200);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->respuestaValidacion($e, isset($transactionStarted) && $transactionStarted);
         } catch (\Exception $e) {
             return $this->responseData([
                 'error' => true,
@@ -251,6 +255,8 @@ class ProveedorInvitationsController extends Controller
                 'message' => 'Invitación revocada correctamente',
                 'data' => $this->mapInvitation($invitation),
             ], 200);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->respuestaValidacion($e, isset($transactionStarted) && $transactionStarted);
         } catch (\Exception $e) {
             return $this->responseData([
                 'error' => true,
@@ -315,6 +321,8 @@ class ProveedorInvitationsController extends Controller
             return $this->responseData([
                 'data' => $data,
             ], 200);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->respuestaValidacion($e, isset($transactionStarted) && $transactionStarted);
         } catch (\Exception $e) {
             return $this->responseData([
                 'error' => true,
@@ -385,6 +393,16 @@ class ProveedorInvitationsController extends Controller
 
                 'dimensionNegocioTexto' => 'nullable|string',
             ]);
+
+            if (
+                $request->input('tipo') === 'Nacional'
+                && !app(\App\Services\RutService::class)->esValido($request->input('rut'))
+            ) {
+                return $this->responseData([
+                    'error' => true,
+                    'message' => 'El RUT no es válido. Revise el número y el dígito verificador.',
+                ], 422);
+            }
 
             $tiposProveedorPermitidos = [
                 'Proveedor de servicios',
@@ -880,6 +898,8 @@ class ProveedorInvitationsController extends Controller
                         $sociedadesDefinidas,
                 ],
             ], 201);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->respuestaValidacion($e, isset($transactionStarted) && $transactionStarted);
         } catch (\Exception $e) {
             if ($transactionStarted) {
                 DB::rollBack();

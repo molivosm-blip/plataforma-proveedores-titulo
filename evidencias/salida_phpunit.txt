@@ -1,13 +1,21 @@
-Ejecutado el 25-11-2026 18:05:43,36 
-Comando: php -d extension=pdo_sqlite -d extension=sqlite3 vendor\phpunit\phpunit\phpunit 
- 
 PHPUnit 10.5.16 by Sebastian Bergmann and contributors.
 
 Runtime:       PHP 8.2.33
-Configuration: C:\Users\marti\OneDrive\Desktop\api-proveedores\phpunit.xml
+Configuration: ...\api-proveedores\phpunit.xml
 
-......................................................            54 / 54 (100%)
+..........Health check de base de datos falló: SQLSTATE[HY000]: General error: 1 no such function: DATABASE (Connection: pruebas, SQL: SELECT DATABASE() AS database_name)
+.....................................................  63 / 101 ( 62%)
+......DICOM no respondió: Connection timed out after 1012 milliseconds
+.DICOM respondió HTTP 500
+.DICOM no respondió: Operation timed out after 1010 milliseconds with 0 bytes received
+....AMLUpdate no respondió: Connection timed out after 1005 milliseconds
+.AMLUpdate respondió HTTP 500
+.AMLUpdate no respondió: Operation timed out after 1014 milliseconds with 0 bytes received
+..AMLUpdate no respondió: Connection timed out after 1008 milliseconds
+.Correo no enviado por SMTP, queda en el registro: No fue posible conectar con el servidor SMTP 127.0.0.1:9: Se produjo un error durante el intento de conexión ya que la parte conectada no respondió adecuadamente tras un periodo de tiempo, o bien se produjo un error en la conexión establecida ya que el host conectado no ha podido responder
+.Error interno ocultado al usuario: SQLSTATE[HY000]: General error: 1 no such table: empresas (Connection: pruebas, SQL: select * from "empresas" where "id" = DIMERC limit 1)
+....................                          101 / 101 (100%)
 
-Time: 00:10.304, Memory: 34.00 MB
+Time: 00:26.712, Memory: 36.00 MB
 
-OK (54 tests, 200 assertions)
+OK (101 tests, 1254 assertions)

@@ -136,6 +136,7 @@ class AuthService
             'admin_portal',
             'admin_area',
             'usuario_area',
+            'auditor',
         ];
 
         if (!in_array($user->role, $rolesInternosPermitidos, true)) {

@@ -43,6 +43,16 @@ class ProveedorDicomController extends Controller
                 'message' => 'Consulta DICOM realizada correctamente',
                 'data' => $this->mapCheck($check),
             ], 200);
+        } catch (\App\Exceptions\ServicioExternoNoDisponibleException $e) {
+            return $this->responseData([
+                'error' => true,
+                'message' => $e->mensajeParaUsuario(),
+            ], 503);
+        } catch (\InvalidArgumentException $e) {
+            return $this->responseData([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ], 422);
         } catch (\Exception $e) {
             return $this->responseData([
                 'error' => true,
@@ -71,6 +81,16 @@ class ProveedorDicomController extends Controller
                 'message' => 'Consulta historial DICOM realizada correctamente',
                 'data' => $this->mapCheck($check),
             ], 200);
+        } catch (\App\Exceptions\ServicioExternoNoDisponibleException $e) {
+            return $this->responseData([
+                'error' => true,
+                'message' => $e->mensajeParaUsuario(),
+            ], 503);
+        } catch (\InvalidArgumentException $e) {
+            return $this->responseData([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ], 422);
         } catch (\Exception $e) {
             return $this->responseData([
                 'error' => true,
@@ -99,6 +119,16 @@ class ProveedorDicomController extends Controller
                 'message' => 'Consulta información DICOM realizada correctamente',
                 'data' => $this->mapCheck($check),
             ], 200);
+        } catch (\App\Exceptions\ServicioExternoNoDisponibleException $e) {
+            return $this->responseData([
+                'error' => true,
+                'message' => $e->mensajeParaUsuario(),
+            ], 503);
+        } catch (\InvalidArgumentException $e) {
+            return $this->responseData([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ], 422);
         } catch (\Exception $e) {
             return $this->responseData([
                 'error' => true,
@@ -128,6 +158,16 @@ class ProveedorDicomController extends Controller
                 'message' => 'Consulta legado DICOM realizada correctamente',
                 'data' => $this->mapCheck($check),
             ], 200);
+        } catch (\App\Exceptions\ServicioExternoNoDisponibleException $e) {
+            return $this->responseData([
+                'error' => true,
+                'message' => $e->mensajeParaUsuario(),
+            ], 503);
+        } catch (\InvalidArgumentException $e) {
+            return $this->responseData([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ], 422);
         } catch (\Exception $e) {
             return $this->responseData([
                 'error' => true,
@@ -157,6 +197,16 @@ class ProveedorDicomController extends Controller
             return $this->responseData([
                 'data' => $checks,
             ], 200);
+        } catch (\App\Exceptions\ServicioExternoNoDisponibleException $e) {
+            return $this->responseData([
+                'error' => true,
+                'message' => $e->mensajeParaUsuario(),
+            ], 503);
+        } catch (\InvalidArgumentException $e) {
+            return $this->responseData([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ], 422);
         } catch (\Exception $e) {
             return $this->responseData([
                 'error' => true,
@@ -205,7 +255,7 @@ class ProveedorDicomController extends Controller
         ];
 
         if (!in_array($segmento, $permitidos, true)) {
-            throw new \Exception('Segmento DICOM inválido. Usa persona o empresa.');
+            throw new \InvalidArgumentException('Segmento DICOM inválido. Usa persona o empresa.');
         }
 
         return $segmento;

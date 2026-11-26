@@ -19,16 +19,16 @@ $router->get('/health/database', function () {
 
         return response()->json([
             'ok' => true,
-            'database' => $result[0]->database_name ?? null,
+            // No se informa el nombre de la base: esta ruta es pública.
             'message' => 'Conexión con MySQL operativa',
         ], 200);
     } catch (\Throwable $error) {
+        // Ruta pública: el detalle técnico queda solo en el registro del servidor.
+        error_log('Health check de base de datos falló: ' . $error->getMessage());
+
         return response()->json([
             'ok' => false,
             'message' => 'No fue posible conectar con MySQL',
-            'detail' => env('APP_DEBUG', false)
-                ? $error->getMessage()
-                : null,
         ], 500);
     }
 });
@@ -57,6 +57,19 @@ $router->group([
     $router->post(
         'auth/msal',
         'AuthController@msalLogin'
+    );
+
+    /*
+     * Recuperación de clave de proveedores (rutas públicas).
+     */
+    $router->post(
+        'auth/olvide-password',
+        'RecuperacionController@solicitar'
+    );
+
+    $router->post(
+        'auth/restablecer-password',
+        'RecuperacionController@restablecer'
     );
 
     /*
@@ -110,7 +123,7 @@ $router->group([
     $router->group([
         'middleware' => [
             'jwt',
-            'role:proveedor,pm_user,pm_admin,admin_portal,admin_area,usuario_area',
+            'role:proveedor,pm_user,pm_admin,admin_portal,admin_area,usuario_area,auditor',
         ],
     ], function () use ($router) {
         $router->get(
@@ -165,7 +178,7 @@ $router->group([
     $router->group([
         'middleware' => [
             'jwt',
-            'role:proveedor,pm_user,pm_admin,admin_portal,admin_area,usuario_area',
+            'role:proveedor,pm_user,pm_admin,admin_portal,admin_area,usuario_area,auditor',
         ],
     ], function () use ($router) {
         $router->post(
@@ -245,7 +258,7 @@ $router->group([
     $router->group([
         'middleware' => [
             'jwt',
-            'role:pm_user,pm_admin,admin_portal,admin_area,usuario_area',
+            'role:pm_user,pm_admin,admin_portal,admin_area,usuario_area,auditor',
         ],
     ], function () use ($router) {
 
@@ -282,6 +295,19 @@ $router->group([
         $router->get(
             'interno/proveedores',
             'ProveedoresController@index'
+        );
+
+        /*
+         * Exportación a CSV y bitácora de acciones de un proveedor.
+         */
+        $router->get(
+            'interno/proveedores/exportar',
+            'ProveedorExtrasController@exportar'
+        );
+
+        $router->get(
+            'interno/proveedores/{id}/bitacora',
+            'ProveedorExtrasController@bitacora'
         );
 
         /*
@@ -588,7 +614,7 @@ $router->group([
     $router->group([
         'middleware' => [
             'jwt',
-            'role:pm_admin,pm_user,admin_portal,admin_area,usuario_area',
+            'role:pm_admin,pm_user,admin_portal,admin_area,usuario_area,auditor',
         ],
     ], function () use ($router) {
         $router->get(
@@ -624,7 +650,7 @@ $router->group([
     $router->group([
         'middleware' => [
             'jwt',
-            'role:pm_admin,pm_user,admin_portal,admin_area,usuario_area',
+            'role:pm_admin,pm_user,admin_portal,admin_area,usuario_area,auditor',
         ],
     ], function () use ($router) {
         $router->get(

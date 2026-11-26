@@ -1,5 +1,7 @@
 export const ROUTES = {
   LOGIN: '/login',
+  OLVIDE_CLAVE: '/olvide-clave',
+  RESTABLECER_CLAVE: '/restablecer-clave',
   HOME: '/',
 
   PROVEEDOR_PUBLICO: {

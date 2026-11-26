@@ -140,6 +140,7 @@ class User extends Model
             'admin_portal',
             'admin_area',
             'usuario_area',
+            'auditor',
         ]);
     }
 

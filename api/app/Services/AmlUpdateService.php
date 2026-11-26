@@ -909,10 +909,9 @@ class AmlUpdateService
         curl_close($ch);
 
         if ($rawResponse === false) {
-            throw new \Exception(
-                'Error cURL AMLUpdate: ' .
-                $curlError
-            );
+            error_log('AMLUpdate no respondió: ' . $curlError);
+
+            throw new \App\Exceptions\ServicioExternoNoDisponibleException('Gesintel (AML)', $curlError);
         }
 
         $decoded =
@@ -920,6 +919,12 @@ class AmlUpdateService
                 $rawResponse,
                 true
             );
+
+        if ($httpCode >= 500) {
+            error_log('AMLUpdate respondió HTTP ' . $httpCode);
+
+            throw new \App\Exceptions\ServicioExternoNoDisponibleException('Gesintel (AML)', 'HTTP ' . $httpCode);
+        }
 
         if (!is_array($decoded)) {
             throw new \RuntimeException(

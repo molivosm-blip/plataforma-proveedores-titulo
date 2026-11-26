@@ -251,9 +251,9 @@ class DicomService
         curl_close($ch);
 
         if ($rawResponse === false) {
-            throw new \RuntimeException(
-                'No fue posible consultar el servicio DICOM: ' . $curlError
-            );
+            error_log('DICOM no respondió: ' . $curlError);
+
+            throw new \App\Exceptions\ServicioExternoNoDisponibleException('DICOM', $curlError);
         }
 
         $decoded = json_decode($rawResponse, true);
@@ -262,6 +262,12 @@ class DicomService
             $decoded = [
                 'raw' => $rawResponse,
             ];
+        }
+
+        if ($httpCode >= 500) {
+            error_log('DICOM respondió HTTP ' . $httpCode);
+
+            throw new \App\Exceptions\ServicioExternoNoDisponibleException('DICOM', 'HTTP ' . $httpCode);
         }
 
         if ($httpCode < 200 || $httpCode >= 300) {

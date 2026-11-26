@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useMsal } from '@azure/msal-react';
 import { Alert, Button, Card, Input, Typography } from 'antd';
 import { LockOutlined, MailOutlined } from '@ant-design/icons';
@@ -356,6 +356,9 @@ const LoginPage: React.FC = () => {
               >
                 {isLoading ? 'Verificando...' : 'Ingresar al Portal'}
               </Button>
+              <p className={styles.hint}>
+                <Link to="/olvide-clave">¿Olvidaste tu clave?</Link>
+              </p>
               <p className={styles.hint}>
                 ¿Primera vez? Usa el enlace de activación que recibiste por
                 correo.

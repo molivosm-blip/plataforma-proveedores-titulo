@@ -63,6 +63,10 @@ const ROLES: Record<string, { nombre: string; descripcion: string }> = {
     nombre: 'Usuario de área',
     descripcion: 'Valida las solicitudes que corresponden a su área.',
   },
+  auditor: {
+    nombre: 'Auditor',
+    descripcion: 'Consulta todo el proceso en modo solo lectura: no puede modificar nada.',
+  },
 };
 
 const AREAS: Record<string, string> = {

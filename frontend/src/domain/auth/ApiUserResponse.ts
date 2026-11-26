@@ -36,6 +36,7 @@ export interface ApiUserResponse {
     | 'admin_portal'
     | 'admin_area'
     | 'usuario_area'
+    | 'auditor'
     | string;
   area?: string | null;
   active?: number | boolean | null;

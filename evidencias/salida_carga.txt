@@ -1,0 +1,18 @@
+Prueba de carga - 26-11-2026 00:34:28
+API: http://localhost:8000 | usuario de prueba: usuario administrador de demostración (admin_portal)
+Solicitudes por nivel: 100, repartidas entre 5 consultas distintas
+
+Simultáneos Solicitudes Por seg.   Mediana    p95        Máximo    Errores  Total(s)
+1            100        4.5        133 ms     589 ms     598 ms     0        22.0    
+10           100        4.7        2,090 ms   2,137 ms   2,166 ms   0        21.5    
+25           100        4.7        5,227 ms   5,305 ms   5,323 ms   0        21.2    
+50           100        4.6        10,546 ms  10,716 ms  10,880 ms  0        21.5    
+
+Mediana por consulta y nivel de usuarios simultáneos:
+  Panel (dashboard)          1 usuarios: 209 ms | 10 usuarios: 2,082 ms | 25 usuarios: 5,219 ms | 50 usuarios: 9,778 ms
+  Listado de proveedores     1 usuarios: 570 ms | 10 usuarios: 2,086 ms | 25 usuarios: 5,237 ms | 50 usuarios: 10,330 ms
+  Notificaciones             1 usuarios: 106 ms | 10 usuarios: 2,081 ms | 25 usuarios: 5,212 ms | 50 usuarios: 10,440 ms
+  Exportación CSV           1 usuarios: 133 ms | 10 usuarios: 2,118 ms | 25 usuarios: 5,235 ms | 50 usuarios: 10,574 ms
+  Catálogo público         1 usuarios: 77 ms | 10 usuarios: 2,077 ms | 25 usuarios: 5,225 ms | 50 usuarios: 10,563 ms
+
+Resultado: sin errores en ninguna solicitud

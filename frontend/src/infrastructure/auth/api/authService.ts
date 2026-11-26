@@ -82,6 +82,33 @@ export class AuthService {
   }
 
   //
+  // Recuperación de clave (proveedores)
+  //
+  static async solicitarRecuperacion(email: string): Promise<string> {
+    const response = await apiClient.post('/auth/olvide-password', { email });
+
+    return (
+      (response.data as { message?: string })?.message ??
+      'Si el correo corresponde a una cuenta de proveedor, enviamos un enlace para cambiar la clave.'
+    );
+  }
+
+  static async restablecerClave(
+    token: string,
+    password: string
+  ): Promise<string> {
+    const response = await apiClient.post('/auth/restablecer-password', {
+      token,
+      password,
+    });
+
+    return (
+      (response.data as { message?: string })?.message ??
+      'Tu clave fue actualizada.'
+    );
+  }
+
+  //
   // Login Microsoft / MSAL
   //
   static async loginMsal(

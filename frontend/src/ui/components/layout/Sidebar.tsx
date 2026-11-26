@@ -59,6 +59,8 @@ const getRoleLabel = (role?: string | null): string => {
       return 'Administrador de Área';
     case 'usuario_area':
       return 'Usuario de Área';
+    case 'auditor':
+      return 'Auditor (solo lectura)';
     default:
       return 'Sin rol';
   }

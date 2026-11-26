@@ -129,6 +129,13 @@ export const resolvePortalRoleFromText = (
   }
 
   if (
+    normalized === 'auditor' ||
+    normalized === 'auditoria'
+  ) {
+    return 'auditor';
+  }
+
+  if (
     normalized === 'proveedor' ||
     normalized === 'supplier'
   ) {
@@ -245,6 +252,7 @@ export const roleLabel: Record<UserRole, string> = {
   admin_portal: 'Administrador Portal',
   admin_area: 'Administrador de Área',
   usuario_area: 'Usuario de Área',
+  auditor: 'Auditor (solo lectura)',
 };
 
 export const getRoleLabel = (role?: UserRole | null): string => {
@@ -270,7 +278,8 @@ export const isInternalRoleName = (
   role === 'pm_user' ||
   role === 'admin_portal' ||
   role === 'admin_area' ||
-  role === 'usuario_area';
+  role === 'usuario_area' ||
+  role === 'auditor';
 
 export const canInviteProveedorByRole = (
   role?: UserRole | string | null,

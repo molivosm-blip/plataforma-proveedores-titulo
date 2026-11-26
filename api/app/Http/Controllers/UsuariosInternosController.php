@@ -43,7 +43,8 @@ class UsuariosInternosController extends Controller
                 'pm_user',
                 'admin_portal',
                 'admin_area',
-                'usuario_area'
+                'usuario_area',
+                'auditor'
             ])->orderBy('id', 'desc');
 
             /*
@@ -61,6 +62,8 @@ class UsuariosInternosController extends Controller
                 'data' => $usuarios,
             ], 200);
 
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->respuestaValidacion($e, isset($transactionStarted) && $transactionStarted);
         } catch (\Exception $e) {
             return $this->responseData([
                 'error' => true,
@@ -103,6 +106,7 @@ class UsuariosInternosController extends Controller
                 'usuario_area',
                 'pm_admin',
                 'pm_user',
+                'auditor',
             ];
 
             if (!in_array($role, $rolesPermitidos, true)) {
@@ -172,6 +176,8 @@ class UsuariosInternosController extends Controller
                 'data'    => $this->mapUser($user),
             ], 201);
 
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->respuestaValidacion($e, isset($transactionStarted) && $transactionStarted);
         } catch (\Exception $e) {
             return $this->responseData([
                 'error' => true,
@@ -217,6 +223,8 @@ class UsuariosInternosController extends Controller
                 'data'    => $this->mapUser($user),
             ], 200);
 
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->respuestaValidacion($e, isset($transactionStarted) && $transactionStarted);
         } catch (\Exception $e) {
             return $this->responseData([
                 'error' => true,
@@ -249,6 +257,8 @@ class UsuariosInternosController extends Controller
                 'data' => $areas,
             ], 200);
 
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->respuestaValidacion($e, isset($transactionStarted) && $transactionStarted);
         } catch (\Exception $e) {
             return $this->responseData([
                 'error' => true,

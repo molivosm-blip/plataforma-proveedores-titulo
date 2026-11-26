@@ -6,7 +6,8 @@ export type UserRole =
   | 'proveedor'
   | 'admin_portal'
   | 'admin_area'
-  | 'usuario_area';
+  | 'usuario_area'
+  | 'auditor';
 
 export type AuthType = 'entra' | 'local';
 
@@ -68,6 +69,7 @@ export const INTERNAL_ROLES: UserRole[] = [
   'admin_portal',
   'admin_area',
   'usuario_area',
+  'auditor',
 ];
 
 export const AREA_ROLES: UserRole[] = [

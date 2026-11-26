@@ -79,6 +79,8 @@ class WorkflowController extends Controller
                 ],
             ], 200);
 
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->respuestaValidacion($e, isset($transactionStarted) && $transactionStarted);
         } catch (\Exception $e) {
             return $this->responseData([
                 'error' => true,
@@ -161,6 +163,8 @@ class WorkflowController extends Controller
                 'data' => $items,
             ], 200);
 
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->respuestaValidacion($e, isset($transactionStarted) && $transactionStarted);
         } catch (\Exception $e) {
             return $this->responseData([
                 'error' => true,
@@ -261,6 +265,8 @@ class WorkflowController extends Controller
                 'data'    => $this->mapStep($step),
             ], 200);
 
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->respuestaValidacion($e, isset($transactionStarted) && $transactionStarted);
         } catch (\Exception $e) {
             if ($transactionStarted) {
                 DB::rollBack();
@@ -329,6 +335,8 @@ class WorkflowController extends Controller
                 'data'    => $this->mapStep($step),
             ], 200);
 
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return $this->respuestaValidacion($e, isset($transactionStarted) && $transactionStarted);
         } catch (\Exception $e) {
             if ($transactionStarted) {
                 DB::rollBack();
